@@ -5,7 +5,7 @@ jobs:
     machine:
       image: circleci/classic:201808-01
     environment:
-      K3S_VERSION: v0.8.1 
+      K3S_VERSION: 0.9.1
 
     working_directory: ~/k3s-circleci
     steps:
@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Setup k3s
           command: |
-            curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=${K3S_VERSION} sh -
+            curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v${K3S_VERSION} sh -
             sleep 5
 
       - run:
