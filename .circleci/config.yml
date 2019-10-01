@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Setup k3s
           command: |
-            curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v${K3S_VERSION} sh -
+            curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 664" INSTALL_K3S_VERSION=v${K3S_VERSION} sh -
             sleep 5
 
       - run:
