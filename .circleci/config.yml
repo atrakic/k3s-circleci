@@ -1,0 +1,23 @@
+# Check https://circleci.com/docs/2.0/ for more details
+version: 2
+jobs:
+  build:
+    machine:
+      image: circleci/classic:201808-01
+    environment:
+      K3S_CLUSTER_SECRET: somethingtotallyrandom
+      K3S_KUBECONFIG_OUTPUT: /output/kubeconfig.yaml
+      K3S_KUBECONFIG_MODE: 666
+
+    working_directory: ~/k3s-circleci
+    steps:
+      - checkout
+      - run:
+          name: Setup k3s
+          command: |
+            curl -sfL https://get.k3s.io | sh -
+
+      - run:
+          name: Get system nodes
+          command: |
+            kubectl get pods
