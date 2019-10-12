@@ -20,3 +20,37 @@ jobs:
           name: Get k3s nodes
           command: |
             kubectl get node
+
+      - run:
+          name: Create a nginx deployment
+          command: | 
+            kubectl create deployment nginx --image=nginx
+
+      - run:
+          name: Create a ClusterIP service
+          command: |
+            kubectl create service clusterip nginx --tcp=80:80
+
+      - run:
+          name: Create an ingress object
+          command: |
+            cat <<EOF | kubectl apply -f -
+            apiVersion: extensions/v1beta1
+            kind: Ingress
+            metadata:
+               name: nginx
+               annotations:
+                 ingress.kubernetes.io/ssl-redirect: "false"
+            spec:
+              rules:
+              - http:
+                  paths:
+                  - path: /
+                    backend:
+                      serviceName: nginx
+                      servicePort: 80
+
+      - run:
+          name: cUrl test
+          command: |
+            curl -LI -s localhost:80/ -o /dev/null -w '%{http_code}\n'
