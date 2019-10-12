@@ -60,6 +60,6 @@ jobs:
       - run:
           name: clean up
           command: |
-            kubrctl delete ing nginx
+            kubectl delete ing nginx
             kubectl delete svc nginx
             kubectl delete deployment nginx
