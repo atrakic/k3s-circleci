@@ -52,6 +52,14 @@ jobs:
             EOF
 
       - run:
-          name: cUrl test
+          name: Sanity test
           command: |
-            curl -LI -s localhost:80/ -o /dev/null -w '%{http_code}\n'
+            kubectl get svc,po,deployment,ing
+            # curl -LI -s localhost:80/ -o /dev/null -w '%{http_code}\n'
+
+      - run:
+          name: clean up
+          command: |
+            kubrctl delete ing nginx
+            kubectl delete svc nginx
+            kubectl delete deployment nginx
