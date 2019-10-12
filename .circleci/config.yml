@@ -49,6 +49,7 @@ jobs:
                     backend:
                       serviceName: nginx
                       servicePort: 80
+            EOF
 
       - run:
           name: cUrl test
